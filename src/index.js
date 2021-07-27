@@ -3,7 +3,7 @@ const app = express();
 
 const server_https = require('https').createServer(app);
 const server = require('http').createServer(app);
-const socketIO = require('socket.io')(server_https, { "cors": { "origin": "*" } });
+const socketIO = require('socket.io')(server, { "cors": { "origin": "*" } });
 
 const scheduler = require('node-schedule');
 
@@ -26,6 +26,7 @@ app.get("/", (req, res) => {
 
 
 socketIO.on('connection', (socket) => {
+    var connectedClientId = socket.id;
     console.log("Client connected and it's id is : " + socket.id);
 
 
@@ -40,7 +41,7 @@ socketIO.on('connection', (socket) => {
 
 });
 
-server_https.listen(port, (req, res) => {
+server.listen(port, (req, res) => {
     console.log(`listning on port : ${port}`);
 });
 
