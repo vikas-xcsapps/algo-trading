@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 
+const server_https = require('https').createServer(app);
 const server = require('http').createServer(app);
-const socketIO = require('socket.io')(server, { "cors": { "origin": "*" } });
+const socketIO = require('socket.io')(server_https, { "cors": { "origin": "*" } });
 
 const scheduler = require('node-schedule');
 
@@ -39,7 +40,7 @@ socketIO.on('connection', (socket) => {
 
 });
 
-server.listen(port, (req, res) => {
+server_https.listen(port, (req, res) => {
     console.log(`listning on port : ${port}`);
 });
 
