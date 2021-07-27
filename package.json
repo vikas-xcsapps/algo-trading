@@ -1,0 +1,19 @@
+{
+  "name": "nodejsschedular",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "Vikas Jha",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "hbs": "^4.1.2",
+    "node-schedule": "^2.0.0",
+    "socket.io": "^4.1.3"
+  }
+}
