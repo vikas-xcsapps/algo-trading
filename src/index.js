@@ -8,6 +8,8 @@ const socketIO = require('socket.io')(server, { "cors": { "origin": "*" } });
 const scheduler = require('node-schedule');
 
 const port = process.env.port || 8000;
+var server_port = process.env.YOUR_PORT || process.env.PORT || 80;
+var server_host = process.env.YOUR_HOST || '0.0.0.0';
 
 const hbs = require("hbs");
 
@@ -41,7 +43,13 @@ app.get("/", (req, res) => {
 
 // });
 
-server.listen(port, (req, res) => {
+// server.listen(process.env.port || 8000, (req, res) => {
+//     console.log(`listning on port : ${port}`);
+// });
+
+
+server.listen(server_port, server_host, (req, res) => {
     console.log(`listning on port : ${port}`);
 });
+
 
