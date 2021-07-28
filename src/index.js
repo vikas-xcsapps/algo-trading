@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
-app.get("vinod",(req,res) => {
+app.get("/vinod",(req,res) => {
 res.send("I am vinod");
 })
 
