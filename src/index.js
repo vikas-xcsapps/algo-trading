@@ -11,20 +11,16 @@ const port = process.env.port || 8000;
 var server_port = process.env.YOUR_PORT || process.env.PORT || 80;
 var server_host = process.env.YOUR_HOST || '0.0.0.0';
 
-const hbs = require("hbs");
-
 app.set("view engine", "hbs");
-
-let periodicFunction = function () {
-    let newDate = new Date(Date.now());
-    const data = newDate.toDateString() + " : " + newDate.toTimeString();
-    return data;
-};
 
 
 app.get("/", (req, res) => {
     res.render("index");
 });
+
+app.get("vinod",(req,res) => {
+res.send("I am vinod");
+})
 
 
 socketIO.on('connection', (socket) => {
@@ -41,10 +37,6 @@ socketIO.on('connection', (socket) => {
 
 
 });
-
-// server.listen(process.env.port || 8000, (req, res) => {
-//     console.log(`listning on port : ${port}`);
-// });
 
 
 server.listen(server_port, server_host, (req, res) => {
