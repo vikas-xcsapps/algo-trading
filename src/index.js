@@ -25,21 +25,21 @@ app.get("/", (req, res) => {
 });
 
 
-socketIO.on('connection', (socket) => {
-    var connectedClientId = socket.id;
-    console.log("Client connected and it's id is : " + socket.id);
+// socketIO.on('connection', (socket) => {
+//     var connectedClientId = socket.id;
+//     console.log("Client connected and it's id is : " + socket.id);
 
 
-    scheduler.scheduleJob('*/2 * * * * *', () => {
+//     scheduler.scheduleJob('*/2 * * * * *', () => {
 
-        let newDate = new Date(Date.now());
-        const data = newDate.toDateString() + " : " + newDate.toTimeString();
-        // const person = { name: "Vikas Kumar", age: 34, sex: "male", developer : "Node Js" };
-        socket.emit("message", data);
-    });
+//         let newDate = new Date(Date.now());
+//         const data = newDate.toDateString() + " : " + newDate.toTimeString();
+//         // const person = { name: "Vikas Kumar", age: 34, sex: "male", developer : "Node Js" };
+//         socket.emit("message", data);
+//     });
 
 
-});
+// });
 
 server.listen(port, (req, res) => {
     console.log(`listning on port : ${port}`);
