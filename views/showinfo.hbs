@@ -4,30 +4,25 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Algo Trading XCS</title>
+    <title>Page Title</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <script src='main.js'></script>
     <script src="https://cdn.socket.io/3.1.3/socket.io.min.js"
         integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh"
         crossorigin="anonymous"></script>
-
 </head>
 
 <body>
+    <h3></h3>
 
-    <h1>Welcome to XCS Algo Trading App</h1>
     <script>
-        const socket = io.connect();
-
+        var socket = io.connect();
         socket.on("connection");
-        socket.on("message", (data) => {
-            console.log(data);
-            document.querySelector("h1").innerHTML = data;
-            //document.querySelector("h1").innerHTML = data.name;
+        socket.on("showinfo", (data) => {
+            console.log("showinfo data : " + data);
+            document.querySelector("h3").innerHTML = data;
         });
-        //Adding comment
-
     </script>
 </body>
 
