@@ -140,7 +140,7 @@ const fetchAllInfo = async (callback) => {
 
 //Hosting Server
 server.listen(server_port, server_host, (req, res) => {
-    console.log(`listning on port : ${port}`);
+    console.log(`listning on server_port : ${server_port} and server_host ${server_host}`);
 });
 
 //Local Host
