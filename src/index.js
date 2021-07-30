@@ -50,11 +50,6 @@ socketIO.on('connection', (socket) => {
     socket.on("addinfo", (infoData) => {
 
         addInfoToDB(infoData);
-
-        fetchAllInfo((result) => {
-            socket.emit("showinfo", JSON.stringify(result));
-            // socket.emit("showinfo", result);
-        })
     });
 
     scheduler.scheduleJob('*/2 * * * * *', () => {
@@ -65,13 +60,13 @@ socketIO.on('connection', (socket) => {
     });
 
     scheduler.scheduleJob('*/1 * * * * *', () => {
-        
+        fetchAllInfo((result) => {
+            socket.emit("showinfo", JSON.stringify(result));
+        })
     });
 
     fetchAllInfo((result) => {
         socket.emit("showinfo", JSON.stringify(result));
-        // socket.emit("showinfo", result);
-        
     })
 
 });
@@ -135,7 +130,6 @@ const addInfoToDB = async (infoData) => {
         });
 
         const result = await reactAddInfo.save();
-        console.log(result);
     } catch (error) {
         console.log(error);
     }
