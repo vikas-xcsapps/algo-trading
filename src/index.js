@@ -48,8 +48,8 @@ socketIO.on('connection', (socket) => {
     socketRef = socket;
 
     socket.on("addinfo", (infoData) => {
+        addInfoToDB(infoData , socket);
 
-        addInfoToDB(infoData);
     });
 
     scheduler.scheduleJob('*/2 * * * * *', () => {
@@ -60,9 +60,7 @@ socketIO.on('connection', (socket) => {
     });
 
     scheduler.scheduleJob('*/1 * * * * *', () => {
-        fetchAllInfo((result) => {
-            socket.emit("showinfo", JSON.stringify(result));
-        })
+        
     });
 
     fetchAllInfo((result) => {
@@ -120,7 +118,7 @@ const AddInfo = new mongoose.model("AddInfo", addInfoSchema);
 
 
 //function to add info into db
-const addInfoToDB = async (infoData) => {
+const addInfoToDB = async (infoData , socket) => {
     try {
         const reactAddInfo = new AddInfo({
             firstName: infoData.firstName,
@@ -130,6 +128,10 @@ const addInfoToDB = async (infoData) => {
         });
 
         const result = await reactAddInfo.save();
+
+        fetchAllInfo((result) => {
+            socket.emit("showinfo", JSON.stringify(result));
+        })
     } catch (error) {
         console.log(error);
     }
