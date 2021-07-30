@@ -112,7 +112,7 @@
 
             var tableBody = document.querySelector("tbody");
             var tableRowsSize = tableBody.rows;
-            for (var i = tableRowsSize.length - 1; i > 0; i--) {
+            for (var i = tableRowsSize.length - 1; i >= 0; i--) {
                 tableBody.deleteRow(i);
             }
 
