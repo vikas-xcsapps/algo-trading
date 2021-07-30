@@ -34,6 +34,14 @@ app.get("/showinfo", (req, res) => {
 
 });
 
+app.get("/stockorder" , (req,res) =>{
+    res.render("stockorder");
+});
+
+app.get("/stockorderhistory" , (req,res) =>{
+    res.render("stockorderhistory");
+});
+
 
 socketIO.on('connection', (socket) => {
     console.log("Client connected and it's id is : " + socket.id);
@@ -41,23 +49,30 @@ socketIO.on('connection', (socket) => {
 
     socket.on("addinfo", (infoData) => {
 
-        addInfoToDB(infoData)
-        console.log(infoData);
+        addInfoToDB(infoData);
+
+        fetchAllInfo((result) => {
+            socket.emit("showinfo", JSON.stringify(result));
+            // socket.emit("showinfo", result);
+        })
     });
 
     scheduler.scheduleJob('*/2 * * * * *', () => {
 
         let newDate = new Date(Date.now());
         const data = newDate.toDateString() + " : " + newDate.toTimeString();
-        // const person = { name: "Vikas Kumar", age: 34, sex: "male", developer : "Node Js" };
         socket.emit("message", data);
     });
 
     scheduler.scheduleJob('*/1 * * * * *', () => {
-        fetchAllInfo((result) => {
-            socket.emit("showinfo", JSON.stringify(result));
-        })
+        
     });
+
+    fetchAllInfo((result) => {
+        socket.emit("showinfo", JSON.stringify(result));
+        // socket.emit("showinfo", result);
+        
+    })
 
 });
 
