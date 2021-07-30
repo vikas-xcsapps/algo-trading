@@ -50,6 +50,13 @@ socketIO.on('connection', (socket) => {
     socket.on("addinfo", (infoData) => {
         addInfoToDB(infoData , socket);
 
+        socket.emit("dbupdated");
+    });
+
+    socket.on("refreshData",()=>{
+        fetchAllInfo((result) => {
+            socket.emit("showinfo", JSON.stringify(result));
+        });
     });
 
     scheduler.scheduleJob('*/2 * * * * *', () => {
@@ -128,10 +135,6 @@ const addInfoToDB = async (infoData , socket) => {
         });
 
         const result = await reactAddInfo.save();
-
-        fetchAllInfo((result) => {
-            socket.emit("showinfo", JSON.stringify(result));
-        })
     } catch (error) {
         console.log(error);
     }
