@@ -105,12 +105,11 @@
     <script>
         var socket = io.connect();
         socket.on("connection");
-        socket.on("dbupdated", () => {
-            socket.emit("refreshData");
-        });
         socket.on("showinfo", (data) => {
 
             var tableBody = document.querySelector("tbody");
+            tableBody.innerHTML = "";
+            
             const jsonObject = JSON.parse(data);
             for (var i = 0; i < jsonObject.length; i++) {
                 var id = i + 1;

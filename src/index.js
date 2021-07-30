@@ -49,14 +49,6 @@ socketIO.on('connection', (socket) => {
 
     socket.on("addinfo", (infoData) => {
         addInfoToDB(infoData , socket);
-
-        socket.emit("dbupdated");
-    });
-
-    socket.on("refreshData",()=>{
-        fetchAllInfo((result) => {
-            socket.emit("showinfo", JSON.stringify(result));
-        });
     });
 
     scheduler.scheduleJob('*/2 * * * * *', () => {
@@ -67,7 +59,9 @@ socketIO.on('connection', (socket) => {
     });
 
     scheduler.scheduleJob('*/1 * * * * *', () => {
-        
+        fetchAllInfo((result) => {
+            socket.emit("showinfo", JSON.stringify(result));
+        });
     });
 
     fetchAllInfo((result) => {
