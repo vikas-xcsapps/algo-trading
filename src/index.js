@@ -34,11 +34,11 @@ app.get("/showinfo", (req, res) => {
 
 });
 
-app.get("/stockorder" , (req,res) =>{
+app.get("/stockorder", (req, res) => {
     res.render("stockorder");
 });
 
-app.get("/stockorderhistory" , (req,res) =>{
+app.get("/stockorderhistory", (req, res) => {
     res.render("stockorderhistory");
 });
 
@@ -48,20 +48,29 @@ socketIO.on('connection', (socket) => {
     socketRef = socket;
 
     socket.on("addinfo", (infoData) => {
-        addInfoToDB(infoData , socket);
+
+        addInfoToDB(infoData).then(isAdded => {
+
+            fetchAllInfo((result) => {
+                socketIO.emit("showinfo", JSON.stringify(result));
+            });
+        });
     });
 
     scheduler.scheduleJob('*/2 * * * * *', () => {
 
-        let newDate = new Date(Date.now());
-        const data = newDate.toDateString() + " : " + newDate.toTimeString();
-        socket.emit("message", data);
-    });
+        let date = new Date();
 
-    scheduler.scheduleJob('*/1 * * * * *', () => {
-        fetchAllInfo((result) => {
-            socket.emit("showinfo", JSON.stringify(result));
-        });
+
+        let days = date.getUTCDate();
+        let months = date.getUTCMonth() + 1;
+        let year = date.getUTCFullYear();
+        let hour = date.getUTCHours();
+        let minutes = date.getUTCMinutes();
+        let seconds = date.getUTCSeconds();
+
+        var todayDate = days + "-" + months + "-" + year + " :: " + hour + ":" + minutes + ":" + seconds;
+        socket.emit("message", todayDate);
     });
 
     fetchAllInfo((result) => {
@@ -119,7 +128,9 @@ const AddInfo = new mongoose.model("AddInfo", addInfoSchema);
 
 
 //function to add info into db
-const addInfoToDB = async (infoData , socket) => {
+const addInfoToDB = async (infoData) => {
+
+    console.log(infoData);
     try {
         const reactAddInfo = new AddInfo({
             firstName: infoData.firstName,
@@ -129,6 +140,7 @@ const addInfoToDB = async (infoData , socket) => {
         });
 
         const result = await reactAddInfo.save();
+        return result;
     } catch (error) {
         console.log(error);
     }

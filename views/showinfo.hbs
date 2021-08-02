@@ -82,22 +82,24 @@
 
     <div class="container">
         <div class="row">
-            <h3></h3>
-            <table class="table table-hover table-bordered">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Age</th>
-                        <th scope="col">Gender</th>
-                        <th scope="col">Date</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div style="width: 100% !important; overflow-x: scroll;">
+                <table class="table table-hover table-bordered">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="text-center">Id</th>
+                            <th scope="col" class="text-center">First Name</th>
+                            <th scope="col" class="text-center">Last Name</th>
+                            <th scope="col" class="text-center">Age</th>
+                            <th scope="col" class="text-center">Gender</th>
+                            <th scope="col" class="text-center">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 
@@ -105,10 +107,8 @@
     <script>
         var socket = io.connect();
         socket.on("connection");
-        socket.on("dbupdated", (payload) => {
-            socket.emit("refreshData");
-        });
         socket.on("showinfo", (data) => {
+            console.log("got result in showinfo : " + data);
 
             var tableBody = document.querySelector("tbody");
             var tableRowsSize = tableBody.rows;

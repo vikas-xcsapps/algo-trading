@@ -40,41 +40,7 @@
 
 <body>
 
-  <script>
 
-    var socket = io.connect();
-    socket.on("connection");
-
-    const GetFormData = function () {
-      var fNameDoc = document.getElementById("fname");
-      var lNameDoc = document.getElementById("lname");
-      var ageDoc = document.getElementById("age");
-      var sexDoc = document.getElementById("sex");
-
-      var fName = fNameDoc.value;
-      var lName = lNameDoc.value;
-      var age = ageDoc.value;
-      var sex = sexDoc.value;
-
-
-      const infoData = {
-        firstName: fName,
-        lastName: lName,
-        age: age,
-        sex: sex
-      }
-
-      socket.emit("addinfo", infoData);
-
-      //Clear Doc
-      fNameDoc.value = "";
-      lNameDoc.value = "";
-      ageDoc.value = "";
-      sexDoc.value = "";
-    }
-
-
-  </script>
 
   {{!-- Navigation Bar --}}
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -117,16 +83,14 @@
 
   <div class=" container">
     <div class="row">
-      <div class="col"></div>
-      <h2 class="text-center">Add your info</h2>
-      <div class="col"></div>
+      <div class="col-4 m-auto text-center">
+        <h2>Add your info</h2>
+      </div>
+
     </div>
     <br>
     <div class="row">
-
-      <div class="col"></div>
-
-      <form>
+      <form class="col-4 m-auto">
         <div class="form-group">
           <label for="fname">First Name</label>
           <input type="text" class="form-control" id="fname" placeholder="Enter your first name">
@@ -151,10 +115,43 @@
         </div>
 
       </form>
-
-      <div class="col"></div>
     </div>
   </div>
+
+
+  <script>
+
+    var socket = io.connect();
+    socket.on("connection");
+
+    const GetFormData = function () {
+      var fNameDoc = document.getElementById("fname");
+      var lNameDoc = document.getElementById("lname");
+      var ageDoc = document.getElementById("age");
+      var sexDoc = document.getElementById("sex");
+
+      var fName = fNameDoc.value;
+      var lName = lNameDoc.value;
+      var age = ageDoc.value;
+      var sex = sexDoc.value;
+
+
+      const infoData = {
+        firstName: fName,
+        lastName: lName,
+        age: age,
+        sex: sex
+      }
+
+      socket.emit("addinfo", infoData);
+
+      //Clear Doc
+      fNameDoc.value = "";
+      lNameDoc.value = "";
+      ageDoc.value = "";
+      sexDoc.value = "";
+    }
+  </script>
 
 </body>
 
